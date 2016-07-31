@@ -1,0 +1,7 @@
+<apex:page showHeader="false">
+    <font size="20" color="blue">
+        <h1>And here is your Visualforce! </h1>
+        <br/>
+        Embedded neatly into here 
+    </font>
+</apex:page>

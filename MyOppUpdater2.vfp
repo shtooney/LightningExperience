@@ -1,0 +1,16 @@
+<apex:page controller="OppsUpdater2" id="pgId">
+<script>
+    function setHidden()
+    {
+        var hiddenValSave = document.getElementById('pgId:frmId:pgBlockId:hiddenStringChosen');
+    }
+</script>
+    <apex:form id="frmId">
+        <apex:pageMessages id="pgMsg"></apex:pageMessages>
+        <apex:pageBlock id="pgBlockId">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!simpleTest}" onclick="setHidden();" value="Update All Opps" rerender="pgMsg"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,22 @@
+public class OppsUpdater2 {
+
+    public String stringChosen {get; set;}
+    
+    public void updateAllOppsToToday(){
+        
+		List<Opportunity> AllOppsList = [SELECT Id, Name, CloseDate,IsWon 
+                                         FROM Opportunity];
+        
+        for(Integer i = 0 ; i < AllOppsList.size(); i++){
+            	AllOppsList[i].CloseDate = Date.today();
+				update AllOppsList[i];             
+        }
+    }
+    
+	public PageReference simpleTest(){
+		new account().addError('Great, all your Opps closed today');
+		OppsUpdater2 ou2 = new OppsUpdater2();
+		ou2.updateAllOppsToToday();
+        return null;
+    }
+}

@@ -1,1 +1,1 @@
-# LightningExperience - helpful for Lightning Experience & etc
+LightningExperience - for Lightning Experience & etc

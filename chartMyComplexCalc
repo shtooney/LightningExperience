@@ -1,13 +1,12 @@
 global with sharing class chartMyFundsOther extends chartjsLineChartData implements iChartjsDataProvider {
     global static string getChartjsData(){  
 	
-	//Being lazy here: will put this into a List later        
+	//This year's accounts, contacts, and funds totals
 	Integer my_accounts  = [SELECT count() FROM Account];
 	Integer my_contacts = [SELECT count() FROM Contact];
 	Integer my_funds  = [SELECT count() FROM Fund__c];
         
-    
-	//Projected growth
+	//Projected growth for next year
 	Integer next_yr_accounts  = ((my_accounts / (my_funds * 3)) * 12) + 4;
 	Integer next_yr_contacts = next_yr_accounts / 2;
 	Integer next_yr_funds  = (my_funds + 4) + [SELECT count() FROM Opportunity];

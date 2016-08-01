@@ -1,13 +1,20 @@
-global with sharing class chartMySessions extends chartjsLineChartData implements iChartjsDataProvider {
+global with sharing class chartMyFundsOther extends chartjsLineChartData implements iChartjsDataProvider {
     global static string getChartjsData(){  
 	
 	//Being lazy here: will put this into a List later        
-	Integer in15_beginner = [SELECT count() FROM Session__c WHERE Level__c = 'Beginner' AND Session_Date__c < NEXT_YEAR];
-	Integer in15_intermediate  = [SELECT count() FROM Session__c WHERE Level__c = 'Intermediate' AND Session_Date__c < NEXT_YEAR];
-	Integer in15_advanced  = [SELECT count() FROM Session__c WHERE Level__c = 'Advanced' AND Session_Date__c < NEXT_YEAR];
+	Integer my_accounts  = [SELECT count() FROM Account];
+	Integer my_contacts = [SELECT count() FROM Contact];
+	Integer my_funds  = [SELECT count() FROM Fund__c];
+        
+    
+	//Projected growth
+	Integer next_yr_accounts  = ((my_accounts / (my_funds * 3)) * 12) + 4;
+	Integer next_yr_contacts = next_yr_accounts / 2;
+	Integer next_yr_funds  = (my_funds + 4) + [SELECT count() FROM Opportunity];
+        
         
         chartjsLineChartData chartjsData = new chartjsLineChartData();
-        chartjsData.labels = new list<string>{'Beginner','Intermediate','Advanced'};
+        chartjsData.labels = new list<string>{'Contacts','Accounts','Funds'};
         chartjsData.datasets = new list<chartjsDataset>();
         chartjsDataset dataset;
         
@@ -19,7 +26,7 @@ global with sharing class chartMySessions extends chartjsLineChartData implement
         dataset.pointStrokeColor = '#fff';
         dataset.pointHighlightFill = '#fff';
         dataset.pointHighlightStroke = 'rgba(220,220,220,1)';
-        dataset.data = new list<integer>{3, 8, 9}; // Example data set of advanced Sessions on the rise for next year
+        dataset.data = new list<integer>{next_yr_accounts, next_yr_contacts, next_yr_funds}; // Year 2
         chartjsData.datasets.add(dataset);
         
         dataset = new chartjsDataset();
@@ -30,7 +37,7 @@ global with sharing class chartMySessions extends chartjsLineChartData implement
         dataset.pointStrokeColor = '#fff';
         dataset.pointHighlightFill = '#fff';
         dataset.pointHighlightStroke = 'rgba(151,187,205,1)';
-        dataset.data = new list<integer>{in15_beginner, in15_intermediate, in15_advanced};
+        dataset.data = new list<integer>{my_accounts, my_contacts, my_funds}; // Year 1
         chartjsData.datasets.add(dataset);
         
         return JSON.serialize(chartjsData);

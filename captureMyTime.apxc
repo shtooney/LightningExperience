@@ -5,27 +5,36 @@
 public class captureMyTime {
 
     /**
-     * Places Cache in. For testing-sake change dt variable to something else
-     * That way cached key isn't overriden
+     * Places Cache in. For testing-sake change myCacheKey variable to something else
+     * each time, that way cached key isn't overriden
 	 */
-    public void setMyTimeInCache(){       
+    public void setMyTimeInCache(String myCacheKey){       
         DateTime dt = System.now();
-		Cache.Org.put('local.VFPageCache.capturedTime', dt); 
+        String CacheKeyString = 'local.VFPageCache.' + myCacheKey;
+		Cache.Org.put(CacheKeyString, dt); 
+        
+        if (Cache.Org.contains(CacheKeyString)){
+            DateTime cachedDt = (DateTime)Cache.Org.get(CacheKeyString);
+            System.debug('In cache: ' + cachedDt + ' AND actual is: ' + System.Now());
+        }
     }
     
 	 /**
-     * Pay attention to debug output - compared cached dt variable vs system time
+     * Pay attention to debug output - compared cached chachedDt variable vs system time
 	 */
-    public void getMyTimeInCache(){       
-		if (Cache.Org.contains('local.VFPageCache.capturedTime')){
-        DateTime cachedDt = (DateTime)Cache.Org.get('local.VFPageCache.capturedTime');
-		System.debug('In cache: ' + cachedDt + 'BUT actual is: ' + System.Now());
+    public void getMyTimeInCache(String myCacheKeyToGet){       
+		String CacheKeyToGetString = 'local.VFPageCache.' + myCacheKeyToGet;
+        
+        if (Cache.Org.contains(CacheKeyToGetString)){
+            DateTime cachedDt = (DateTime)Cache.Org.get(CacheKeyToGetString);
+            System.debug('In cache: ' + cachedDt + ' BUT actual is: ' + System.Now());
         }
     }
     
     /**
-     * Scrap work
+     * Scrap work example:
      * captureMyTime myTimeCheck = new captureMyTime();
-	 * myTimeCheck.getMyTimeInCache();
+	 * myTimeCheck.setMyTimeInCache('a123');
+	 * myTimeCheck.getMyTimeInCache('a123');
 	 */
 }

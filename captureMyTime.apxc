@@ -1,0 +1,31 @@
+/**
+ * This class will be instantiated over & over in testing BUT cache will stay the same
+ * Thus proving that things are in cache! 
+ */
+public class captureMyTime {
+
+    /**
+     * Places Cache in. For testing-sake change dt variable to something else
+     * That way cached key isn't overriden
+	 */
+    public void setMyTimeInCache(){       
+        DateTime dt = System.now();
+		Cache.Org.put('local.VFPageCache.capturedTime', dt); 
+    }
+    
+	 /**
+     * Pay attention to debug output - compared cached dt variable vs system time
+	 */
+    public void getMyTimeInCache(){       
+		if (Cache.Org.contains('local.VFPageCache.capturedTime')){
+        DateTime cachedDt = (DateTime)Cache.Org.get('local.VFPageCache.capturedTime');
+		System.debug('In cache: ' + cachedDt + 'BUT actual is: ' + System.Now());
+        }
+    }
+    
+    /**
+     * Scrap work
+     * captureMyTime myTimeCheck = new captureMyTime();
+	 * myTimeCheck.getMyTimeInCache();
+	 */
+}
